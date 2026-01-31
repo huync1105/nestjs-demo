@@ -2,7 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { UserCreateInput } from '../../generated/prisma/models/User';
+import {
+  UserCreateInput,
+  UserModel,
+  UserWhereUniqueInput,
+} from '../../generated/prisma/models/User';
 import { User } from '../../generated/prisma/client';
 
 @Injectable()
@@ -27,5 +31,9 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  findUnique(params: UserWhereUniqueInput) {
+    return this.prisma.user.findUnique({ where: { ...params } });
   }
 }
